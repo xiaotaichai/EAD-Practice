@@ -1,0 +1,30 @@
+---
+title: "Air_Pollution"
+author: "Xiaotai Chai"
+date: "2/27/2018"
+output: pdf_document
+---
+## Read in data
+```{r}
+pollution <- read.csv("avgpm25.csv")
+```
+
+## Initially explore and visualize the data
+```{r}
+plot(pollution)
+plot(pollution$region, pollution$pm25)
+```
+
+```{r}
+#library(ggplot2)
+gg <- ggplot(pollution, aes(x=latitude,y=pm25)) + 
+  geom_point(shape=1, aes(colour = factor(region))) +
+  scale_shape_discrete(solid=F) +
+  labs(y="pm25", x="latitude", title="pollution")
+
+cutoff <- data.frame(yintercept=12, cutoff=factor(12))
+gg + 
+  geom_hline(aes(yintercept=yintercept, linetype=cutoff), data=cutoff, show_guide=TRUE) 
+
+```
+
